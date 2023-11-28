@@ -28,7 +28,7 @@ girl_names = year_df[year_df['sex']=='F'].sort_values(by='n', ascending=False).h
 boy_names = year_df[year_df['sex']=='M'].sort_values(by='n', ascending=False).head(5)['name'].reset_index(drop=True)    
 top_names = pd.concat([girl_names, boy_names], axis=1).reset_index(drop=True)
 top_names.columns = ['Girl','Boy']
-top_names.set_index([pd.Index([1, 2, 3, 4,5])])
+# top_names.set_index([pd.Index([1, 2, 3, 4,5])])
 st.write(f"The top names in {selected_year} are:")
 st.dataframe(top_names)
 
