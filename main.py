@@ -21,13 +21,13 @@ else:
 
 st.markdown("---")
 
-selected_year = st.selectbox("Select a year to see its most popular boy and girl names!", df['year'].unique())
+selected_year = st.selectbox("Select a year to see its most popular girl and boy names!", df['year'].unique())
 
 year_df = df[df['year'] == selected_year]
 girl_names = year_df[year_df['sex']=='F'].sort_values(by='n', ascending=False).head(5)['name'].reset_index(drop=True)    
 boy_names = year_df[year_df['sex']=='M'].sort_values(by='n', ascending=False).head(5)['name'].reset_index(drop=True)    
 top_names = pd.concat([girl_names, boy_names], axis=1).reset_index(drop=True)
-top_names.columns = ['girl','boy']
+top_names.columns = ['Girl','Boy']
 st.write(f"The top names in {selected_year} are:")
 st.dataframe(top_names)
 
