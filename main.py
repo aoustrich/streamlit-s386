@@ -8,25 +8,27 @@ st.title('Popular Names')
 url = "https://raw.githubusercontent.com/esnt/Data/main/Names/popular_names.csv"
 df = pd.read_csv(url)
 
-selected_name = st.text_input("Enter a name to see its popularity over time", "ex: John")
+selected_name = st.text_input("Enter a name to see its popularity over time", "")
 
 name_df = df[df['name'] == selected_name]
 if name_df.empty:
     st.write("No data found. Check your spelling and try again.")
 else:
     fig = px.line(name_df, x="year", y="n", color='sex',
-                  color_discrete_sequence=['#F8766D', '#00BA38'])
+                  color_discrete_sequence=['#F8766D', '#00BA38'],
+                  title=f"Popularity of name {selected_name}")
     st.plotly_chart(fig)
 
 st.markdown("---")
 
-selected_year = st.selectbox("Select a year to its most popular boy and girl names!", df['year'].unique())
+selected_year = st.selectbox("Select a year to see its most popular boy and girl names!", df['year'].unique())
 
 year_df = df[df['year'] == selected_year]
 girl_names = year_df[year_df['sex']=='F'].sort_values(by='n', ascending=False).head(5)['name'].reset_index(drop=True)    
 boy_names = year_df[year_df['sex']=='M'].sort_values(by='n', ascending=False).head(5)['name'].reset_index(drop=True)    
 top_names = pd.concat([girl_names, boy_names], axis=1).reset_index(drop=True)
-top_names.columns = ['girl','boy']
+top_names.columns = ['Girl','Boy']
+top_names.set_index([pd.Index([1, 2, 3, 4,5]), 'Rank'])
 st.write(f"The top names in {selected_year} are:")
 st.dataframe(top_names)
 
